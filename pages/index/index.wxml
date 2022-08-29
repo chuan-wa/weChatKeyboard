@@ -1,0 +1,165 @@
+<view class="page_box" catchtap="hindKeyboard">
+  <view class="input_view" catchtap="hindKeyboard">
+    <text class="title"></text>
+    <view class="input_box" catchtap="showKeyboard">
+      <text class="input_label"></text>
+      <view class="content" wx:if="{{content.length}}">
+        <view wx:for="{{content}}" wx:key="index" data-str-index="{{index + 1}}" catchtap="getStrPosition">
+          <view class="number-block">{{item}}<view class="cursor cursor-insert" wx:if="{{cursorIndex === index + 1}}"></view>
+          </view>
+        </view>
+      </view>
+      <view class="cursor" wx:if="{{!cursorIndex}}"></view>
+      <text class="default-content" wx:if="{{!content.length}}">{{defaultContent}}</text>
+    </view>
+  </view>
+  <!-- 数字键盘 -->
+  <view class="keyboard" hidden="{{!keyShow}}" catchtap="normalTap">
+    <view class="left">
+      <text class="keys {{index%3==0&&'border0'}}&&{{index==9&&'abcFont'}} " wx:for='{{KeyboardKeys}}' wx:key="index" catchtap="keyTap" data-keys="{{item}}">{{item}}</text>
+    </view>
+    <view class="right">
+      <text class="backscape"  capture-bind:touchstart="pressCountTime" capture-catch:touchend="stopPress" data-keys="删除">删除</text>
+      <text class="complete" catchtap="hindKeyboard">完成</text>
+    </view>
+  </view>
+  <!-- 字母键盘 -->
+  <view class="keyboardWords" hidden="{{!keyWordShow}}" catchtap="normalTap">
+    <view class="row">
+      <view class="wordsRow">     
+        <button wx:for='{{KeyboardWordsKeys1}}' wx:key="index" class="wordKeys" style="width: {{keyWidth}}rpx;margin: {{keyMargin}};"  bindtap="keyTap"  capture-bind:touchstart="showKeyTap" capture-bind:touchend="showKeyTap" data-keys="{{item}}">{{item}}</button>
+      </view>
+    </view>
+    <view class="row">
+      <view class="wordsRow">      
+        <button class="wordKeys" wx:for='{{KeyboardWordsKeys2}}' wx:key="index" style="width: {{keyWidth}}rpx;margin: {{keyMargin}}rpx;"   catchtap="keyTap" capture-bind:touchstart="showKeyTap" capture-bind:touchend="showKeyTap" data-keys="{{item}}">{{item}}</button>
+      </view>
+    </view>
+    <view class="row">
+      <text class='functionButton' catchtap="keyTap" data-keys="大写">大写</text>
+      <view class="wordsRow" style="width: 69%;">
+        <button class="wordKeys" wx:for='{{KeyboardWordsKeys3}}' wx:key="index" style="width: {{keyWidth}}rpx;margin: {{keyMargin}}rpx;"  catchtap="keyTap" capture-bind:touchstart="showKeyTap" capture-bind:touchend="showKeyTap" data-keys="{{item}}">{{item}}</button>
+      </view>
+      <text class='functionButton'  capture-bind:touchstart="pressCountTime" capture-catch:touchend="stopPress"  data-keys="删除">删除</text>
+    </view>
+    <view class="row">
+      <view class="functionButtonLarger" catchtap="keyTap" data-keys="123">123</view>
+      <view class="functionButtonLarger" catchtap="keyTap" data-keys="#+=">#+=</view>
+      <view class="functionButtonBlankSpace" catchtap="keyTap" data-keys='_'>空格</view>
+      <view class="functionButtonComplete" catchtap="hindKeyboard">完成</view>
+    </view>
+  </view>
+
+  <!-- 符号键盘 -->
+  <view class="keyboardWords" hidden="{{!keySignShow}}" catchtap="normalTap">
+    <view class="row">
+      <view class="wordsRow">
+        <button class="wordKeys" wx:for='{{KeyboardSignKeys1}}' wx:key="index" style="width: {{keyWidth}}rpx;margin: {{keyMargin}}rpx;"   catchtap="keyTap" capture-bind:touchstart="showKeyTap" capture-bind:touchend="showKeyTap" data-keys="{{item}}">{{item}}</button>
+      </view>
+    </view>
+    <view class="row" style="width: 100%;">
+      <view class="wordsRow" style="width: 100%;">
+        <button wx:for='{{KeyboardSignKeys2}}' wx:key="index" class="wordKeys" style="width: {{keyWidth}}rpx;margin: {{keyMargin}}rpx;"   catchtap="keyTap" capture-bind:touchstart="showKeyTap" capture-bind:touchend="showKeyTap" data-keys="{{item}}">{{item}}</button>
+      </view>
+    </view>
+    <view class="row">
+      <view class="wordsRow" style="width: 79.5%;margin-left: 16rpx">
+        <button class="wordKeys" wx:for='{{KeyboardSignKeys3}}' wx:key="index" style="width: {{keyWidth}}rpx;margin: {{keyMargin}}rpx;"   catchtap="keyTap" capture-bind:touchstart="showKeyTap" capture-bind:touchend="showKeyTap" data-keys="{{item}}">{{item}}</button>
+      </view>
+      <text class='functionButton'    capture-bind:touchstart="pressCountTime" capture-catch:touchend="stopPress" data-keys="删除">删除</text>
+      
+    </view>
+    <view class="row">
+      <view class="functionButtonLarger" catchtap="keyTap" data-keys="123">123</view>
+      <view class="functionButtonLarger" catchtap="keyTap" data-keys="ABC">ABC</view>
+      <view class="wordsRow" style="width: 40%;">
+        <button wx:for='{{KeyboardSignKeys4}}' wx:key="index" class="wordKeys" style="width: {{keyWidth}}rpx;margin: {{keyMargin}}rpx;"   catchtap="keyTap" capture-bind:touchstart="showKeyTap" capture-bind:touchend="showKeyTap" data-keys="{{item}}">{{item}}</button>
+      </view>
+      <view class="functionButtonComplete" catchtap="hindKeyboard">完成</view>
+    </view>
+  </view>
+  <!-- 大写键盘 -->
+  <view class="keyboardWords" hidden="{{!keyWordsCapShow}}" catchtap="normalTap">
+    <view class="row">
+      <view class="wordsRow">
+        <button wx:for='{{KeyboardWordsKeys1CAP}}' wx:key="index" class="wordKeys" style="width: {{keyWidth}}rpx;margin: {{keyMargin}}rpx;"   catchtap="keyTap" capture-bind:touchstart="showKeyTap" capture-bind:touchend="showKeyTap" data-keys="{{item}}">{{item}}</button>
+      </view>
+    </view>
+    <view class="row">
+      <view class="wordsRow">
+        <button wx:for='{{KeyboardWordsKeys2CAP}}' wx:key="index" class="wordKeys" style="width: {{keyWidth}}rpx;margin: {{keyMargin}}rpx;"   catchtap="keyTap" capture-bind:touchstart="showKeyTap" capture-bind:touchend="showKeyTap" data-keys="{{item}}">{{item}}</button>
+      </view>
+    </view>
+    <view class="row">
+      <text class='functionButton' catchtap="keyTap" data-keys="小写">小写</text>
+      <view class="wordsRow" style="width:69%">
+        <button wx:for='{{KeyboardWordsKeys3CAP}}' wx:key="index" class="wordKeys" style="width: {{keyWidth}}rpx;margin: {{keyMargin}}rpx;"   catchtap="keyTap" capture-bind:touchstart="showKeyTap" capture-bind:touchend="showKeyTap" data-keys="{{item}}">{{item}}</button>
+      </view>
+      <text class='functionButton'   capture-bind:touchstart="pressCountTime" capture-catch:touchend="stopPress" data-keys="删除">删除</text>
+    </view>
+    <view class="row">
+      <view class="functionButtonLarger" catchtap="keyTap" data-keys="123">123</view>
+      <view class="functionButtonLarger" catchtap="keyTap" data-keys="#+=">#+=</view>
+      <view class="functionButtonBlankSpace" catchtap="keyTap" data-keys='$'>空格</view>
+      <view class="functionButtonComplete" catchtap="hindKeyboard">完成</view>
+    </view>
+  </view>
+
+
+  <!-- 小写字母弹窗 -->
+  <view wx:for='{{KeyboardWordsKeys1}}' wx:key="index" data-keys="{{item}}">
+    <view class='popupmenu' style='bottom:{{popBottom[0]}}rpx ;left:{{-8+index*popLeftMove}}rpx' hidden="{{!showkeyInKeyboardTotalWordsKeys[item]}}">
+      <view class="popupmenu_item">{{item}}</view>
+    </view>
+  </view>
+  <view wx:for='{{KeyboardWordsKeys2}}' wx:key="index" data-keys="{{item}}">
+    <view class='popupmenu' style='bottom:{{popBottom[1]}}rpx;left:{{29+index*popLeftMove}}rpx' hidden="{{!showkeyInKeyboardTotalWordsKeys[item]}}">
+      <view class="popupmenu_item">{{item}}</view>
+    </view>
+  </view>
+  <view wx:for='{{KeyboardWordsKeys3}}' wx:key="index" data-keys="{{item}}">
+    <view class='popupmenu' style='bottom:{{popBottom[2]}}rpx;left:{{103+index*popLeftMove}}rpx' hidden="{{!showkeyInKeyboardTotalWordsKeys[item]}}">
+      <view class="popupmenu_item" style="border: none">{{item}}</view>
+    </view>
+  </view>
+  <!-- 大写字母弹窗 -->
+  <view wx:for='{{KeyboardWordsKeys1CAP}}' wx:key="index" data-keys="{{item}}">
+    <view class='popupmenu' style='bottom:{{popBottom[0]}}rpx ;left:{{-8+index*popLeftMove}}rpx' hidden="{{!showkeyInKeyboardTotalWordsKeys[item]}}">
+      <view class="popupmenu_item" style="border: none">{{item}}</view>
+    </view>
+  </view>
+  <view wx:for='{{KeyboardWordsKeys2CAP}}' wx:key="index" data-keys="{{item}}">
+    <view class='popupmenu' style='bottom:{{popBottom[1]}}rpx ;left:{{29+index*popLeftMove}}rpx' hidden="{{!showkeyInKeyboardTotalWordsKeys[item]}}">
+      <view class="popupmenu_item" style="border: none">{{item}}</view>
+    </view>
+  </view>
+  <view wx:for='{{KeyboardWordsKeys3CAP}}' wx:key="index" data-keys="{{item}}">
+    <view class='popupmenu' style='bottom:{{popBottom[2]}}rpx ;left:{{103+index*popLeftMove}}rpx' hidden="{{!showkeyInKeyboardTotalWordsKeys[item]}}">
+      <view class="popupmenu_item" style="border: none">{{item}}</view>
+    </view>
+  </view>
+  <!-- 符号弹窗 -->
+  <view wx:for='{{KeyboardSignKeys1}}' wx:key="index" data-keys="{{item}}">
+    <view class='popupmenu' style='bottom:{{popBottom[0]}}rpx ;left:{{-8+index*popLeftMove}}rpx' hidden="{{!showkeyInKeyboardTotalWordsKeys[item]}}">
+      <view class="popupmenu_item" style="border: none">{{item}}</view>
+    </view>
+  </view>
+  <view wx:for='{{KeyboardSignKeys2}}' wx:key="index" data-keys="{{item}}">
+    <view class='popupmenu' style='bottom:{{popBottom[1]}}rpx ;left:{{-8+index*popLeftMove}}rpx' hidden="{{!showkeyInKeyboardTotalWordsKeys[item]}}">
+      <view class="popupmenu_item" style="border: none">{{item}}</view>
+    </view>
+  </view>
+  <view wx:for='{{KeyboardSignKeys3}}' wx:key="index" data-keys="{{item}}">
+    <view class='popupmenu' style='bottom:{{popBottom[2]}}rpx ;left:{{10+index*popLeftMove}}rpx' hidden="{{!showkeyInKeyboardTotalWordsKeys[item]}}">
+      <view class="popupmenu_item" style="border: none">{{item}}</view>
+    </view>
+  </view>
+  <view wx:for='{{KeyboardSignKeys4}}' wx:key="index" data-keys="{{item}}">
+    <view class='popupmenu' style='bottom:{{popBottom[3]}}rpx ;left:{{245+index*popLeftMove}}rpx' hidden="{{!showkeyInKeyboardTotalWordsKeys[item]}}">
+      <view class="popupmenu_item" style="border: none">{{item}}</view>
+    </view>
+  </view>
+
+
+
+</view>
